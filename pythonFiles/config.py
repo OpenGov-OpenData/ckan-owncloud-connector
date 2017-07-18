@@ -4,11 +4,11 @@ test_id = int(time.time())
 
 Config = {
     # Change this to your ownCloud's URL
-    'owncloud_url': 'https://136.200.245.46/',
+    'owncloud_url': '',
     # ownCloud login
-    'owncloud_login': 'bbuchthal',
+    'owncloud_login': '',
     # ownCloud password
-    'owncloud_password': 'test',
+    'owncloud_password': '',
     # this is the local path to download to
-    'localDownloadDirectory': 'C:/Users/Brand/Documents',
+    'localDownloadDirectory': '',
 }
