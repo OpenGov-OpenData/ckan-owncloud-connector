@@ -76,4 +76,4 @@ Config = {
 
 }
 
-Here, you should specify the URL of the CKAN instance, your login and password, as well as a local directory that the zip files will be downloaded to.  
+Here, you should specify the URL of the owncloud instance, your login and password, as well as a local directory that the zip files will be downloaded to.  
