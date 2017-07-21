@@ -88,4 +88,4 @@ Config = {
 
 Here, you should specify the URL of the owncloud instance, your login and password, as well as a local directory that the zip files will be downloaded to.  
 
-When the Config.Py file is uploaded, and the zip file has been uploaded to OwnCloud, you can run this script via the command line by running "Python Main.Py"
+When the Config.Py file is filled out correctly, and the zip file has been uploaded to OwnCloud, you can run this script via the command line by running "Python Main.Py"
