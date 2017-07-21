@@ -30,7 +30,7 @@ ROOT
 
 ### Installing
 
-To install this script, just clone this repo to your local machine
+To install this script, clone this repo to your local machine
 
 ## Running this script
 
