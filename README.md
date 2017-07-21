@@ -14,9 +14,8 @@ To run this script, first you must add a zip file to OwnCloud.  Your OwnCloud di
        |-&gt;SUCCESS
 
        |-&gt;FAILURE
+       
 |-&gt;ORG_2
-
-       |
 
        |-&gt;SUCCESS
 
