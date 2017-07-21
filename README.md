@@ -32,7 +32,7 @@ ROOT
 
 To install this script, clone this repo to your local machine
 
-## Running this script
+## Configuring the Script
 
 To run this script, you will need to set up the config.py file, and upload a zip file (or multiple zip files) to your OwnCloud account.
 
@@ -64,7 +64,7 @@ Config = {
 
 Here, you should specify the URL of the owncloud instance, your login and password, as well as a local directory that the zip files will be downloaded to.  
 
-### Creating/Uploading OwnCloud Zip File
+### Job.Json
 
 You should create a zip file with two files inside of it.  The first file is the file that will be uploaded to CKAN.  This can be a file of any type and any name.  The second is a JSON file that must be called job.json.  The job.json file should look like this:
 
@@ -102,7 +102,7 @@ When you have correctly filled out your job.json file, create a zip file with th
 
 
 
-## Deployment
+## Running the Script
 
 When the Config.Py file is filled out correctly, and the zip file (or multiple zip files) have been uploaded to OwnCloud, you can run this script via the command line by running:
 ```
