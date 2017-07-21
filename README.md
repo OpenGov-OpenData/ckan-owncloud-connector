@@ -1,10 +1,16 @@
-# ckan-owncloud-connector
+# CKAN OwnCloud Connector
 
 This is a script that allows you to upload your files to CKAN via OwnCloud.  
 
-To run this script, first you must add a zip file to OwnCloud.  Your OwnCloud directory should look like this:
+## Getting Started
 
+To run this script, clone this repo to your local machine.
 
+### Prerequisites
+
+To run this script, you will need a working version of Python.  You should also have a running instance of OwnCloud.  Your owncloud directory should also look like this:
+
+```
 &lt;ROOT&gt;
 
 |-&gt;ORG_1
@@ -21,14 +27,50 @@ To run this script, first you must add a zip file to OwnCloud.  Your OwnCloud di
 
        |-&gt;FAILURE
        
-etc.
+(etc.)
+```
 
-The zip file should be uploaded inside of one the "Organization" directories.  From there, depending on the result of the CKAN job, it will be moved to either the success or failure directory inside of the organization directory.
+### Installing
 
-The zip file should have two files inside of it.  The first file is the file that will be uploaded to CKAN.  This can be a file of any type.  The second is a JSON file that must be called job.json
+To install this script, just clone this repo to your local machine
 
-The job.json file should look like this:
+## Running this script
 
+To run this script, you will need to set up the config.py file, and upload a zip file (or multiple zip files) to your OwnCloud account.
+
+### Config.Py
+
+Your Config.Py file (found in this repo) should look like this:
+
+```
+Config = {
+
+    # Change this to your ownCloud's URL
+
+    'owncloud_url': '',
+
+    # ownCloud login
+
+    'owncloud_login': '',
+
+    # ownCloud password
+
+    'owncloud_password': '',
+
+    # this is the local path to download to
+
+    'localDownloadDirectory': '',
+
+}
+```
+
+Here, you should specify the URL of the owncloud instance, your login and password, as well as a local directory that the zip files will be downloaded to.  
+
+### Creating/Uploading OwnCloud Zip File
+
+You should create a zip file with two files inside of it.  The first file is the file that will be uploaded to CKAN.  This can be a file of any type and any name.  The second is a JSON file that must be called job.json.  The job.json file should look like this:
+
+```
 {
 
   "etl_version": &lt;optional: version_number&gt;,
@@ -56,36 +98,13 @@ The job.json file should look like this:
     }
 
 }
+```
 
-The schema need not be specified in the JOB.JSON file.  The data will be insert/upserted and the new CKAN Data Dictionary will allow the data curator to modify the data-types post-upload.
+When you have correctly filled out your job.json file, create a zip file with the file to be uploaded and the job.json file in it.  Then upload this zip file to the correct orginization directory.
 
 
-Once a file is processed, the ZIP file is moved to either the SUCCESS or ERROR directory inside that organization directory.  An additional report file is added to the ZIP file.  It will be a TXT file describing the outcome of the ETL job.
 
-Before running this script, you must also fill out the Config.Py file from this github repo.  
+## Deployment
 
-The Config.Py file looks like this:
+When the Config.Py file is filled out correctly, and the zip file (or multiple zip files) have been uploaded to OwnCloud, you can run this script via the command line by running "Python Main.Py".  You can also run this script on a scheduler, and it will automatically attempt to upload all zip files in the organization directories to CKAN, and will move the zip files to the success/failure folder of its organization directory depending on the result of the CKAN file upload.
 
-Config = {
-
-    # Change this to your ownCloud's URL
-
-    'owncloud_url': '',
-
-    # ownCloud login
-
-    'owncloud_login': '',
-
-    # ownCloud password
-
-    'owncloud_password': '',
-
-    # this is the local path to download to
-
-    'localDownloadDirectory': '',
-
-}
-
-Here, you should specify the URL of the owncloud instance, your login and password, as well as a local directory that the zip files will be downloaded to.  
-
-When the Config.Py file is filled out correctly, and the zip file has been uploaded to OwnCloud, you can run this script via the command line by running "Python Main.Py"
