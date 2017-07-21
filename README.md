@@ -11,21 +11,19 @@ To run this script, clone this repo to your local machine.
 To run this script, you will need a working version of Python.  You should also have a running instance of OwnCloud.  Your owncloud directory should also look like this:
 
 ```
-&lt;ROOT&gt;
+ROOT
 
-|-&gt;ORG_1
+| ORG_1
 
-       |
+       | SUCCESS
 
-       |-&gt;SUCCESS
-
-       |-&gt;FAILURE
+       | FAILURE
        
-|-&gt;ORG_2
+| ORG_2
 
-       |-&gt;SUCCESS
+       | SUCCESS
 
-       |-&gt;FAILURE
+       | FAILURE
        
 (etc.)
 ```
