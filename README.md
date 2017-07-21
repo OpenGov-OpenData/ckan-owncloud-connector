@@ -4,11 +4,11 @@ This is a script that allows you to upload your files to CKAN via OwnCloud.
 
 ## Getting Started
 
-To run this script, clone this repo to your local machine.
+First, clone this repo to your local machine.
 
 ### Prerequisites
 
-To run this script, you will need a working version of Python.  You should also have a running instance of OwnCloud.  Your owncloud directory should also look like this:
+To run this script, you will need a working version of Python.  You should also have a running instance of OwnCloud.  Your OwnCloud directory should look like this:
 
 ```
 ROOT
@@ -71,25 +71,25 @@ You should create a zip file with two files inside of it.  The first file is the
 ```
 {
 
-  "etl_version": &lt;optional: version_number&gt;,
+  "etl_version": optional: version_number,
 
-  "package_id": &lt;mandatory: name of package uploading to or creating&gt;,
+  "package_id": mandatory: name of package uploading to or creating,
 
-  "resource_name": &lt;mandatory:resource name&gt;,
+  "resource_name": mandatory:resource name,
 
-  "ckan_url": &lt;mandatory: fully qualified url of CKAN site&gt;,
+  "ckan_url": mandatory: fully qualified url of CKAN site,
 
-  "file_name": &lt;mandatory: file name of data file&gt;,
+  "file_name": mandatory: file name of data file,
 
-  "method": &lt;mandatory: insert, upsert&gt;,
+  "method": mandatory: insert, upsert,
 
-  "organization": &lt;mandatory: CKAN organization&gt;,
+  "organization": mandatory: CKAN organization,
 
-  "ckan_api_key": &lt;mandatory: ckan API key&gt;,
+  "ckan_api_key": mandatory: ckan API key,
 
-  "notification_emails": &lt;optional - comma-delimited list of emails&gt;
+  "notification_emails": optional - comma-delimited list of emails,
 
-  “metadata:” {  &lt;list all metadata attributes that will be set for the resource&gt;
+  “metadata:” {  list all metadata attributes that will be set for the resource
 
     “description”: ... 
 
@@ -97,6 +97,7 @@ You should create a zip file with two files inside of it.  The first file is the
 
 }
 ```
+The package ID is for updating a pre-existing resource.  You should specify the package ID of the package this resource is in.  Resource name is the name the file will have on CKAN.  CKAN URL is the base URL of the CKAN instance to upload the file to.  File name is the name of the file in the zip file.  Method is the method to update the resource (either insert or upsert.  If creating a new resource, leave blank).  Organization is the organization to upload this dataset to.  API key is the API key of your user on CKAN.  Notification emails is a list of emails that will be emailed with the results of the script.  Metadata is the information when creating a new package that will be uploaded to CKAN.
 
 When you have correctly filled out your job.json file, create a zip file with the file to be uploaded and the job.json file in it.  Then upload this zip file to the correct orginization directory.
 
