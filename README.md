@@ -104,5 +104,9 @@ When you have correctly filled out your job.json file, create a zip file with th
 
 ## Deployment
 
-When the Config.Py file is filled out correctly, and the zip file (or multiple zip files) have been uploaded to OwnCloud, you can run this script via the command line by running "Python Main.Py".  You can also run this script on a scheduler, and it will automatically attempt to upload all zip files in the organization directories to CKAN, and will move the zip files to the success/failure folder of its organization directory depending on the result of the CKAN file upload.
+When the Config.Py file is filled out correctly, and the zip file (or multiple zip files) have been uploaded to OwnCloud, you can run this script via the command line by running:
+```
+Python Main.Py
+```
+You can also run this script on a scheduler, and it will automatically attempt to upload all zip files in the organization directories to CKAN, and will move the zip files to the success/failure folder of its organization directory depending on the result of the CKAN file upload.
 
