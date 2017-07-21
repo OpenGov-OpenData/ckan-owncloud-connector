@@ -111,3 +111,22 @@ Python Main.Py
 ```
 You can also run this script on a scheduler, and it will automatically attempt to upload all zip files in the organization directories to CKAN, and will move the zip files to the success/failure folder of its organization directory depending on the result of the CKAN file upload.
 
+# CKAN PDF File Library
+
+This is a script that allows you to batch upload PDF's to a "PDf Library" on your CKAN instance.  It will read the metadata of the files from a CSV, and use this information to upload the files to CKAN.  There will be a Config.Py file with the name of the base CKAN URL and the CKAN API key of your CKAN user.  From there you will fill out a CSV file with these columns:
+
+```
+{
+
+  "package_id": mandatory: name of package uploading to or creating,
+
+  "resource_name": mandatory:resource name,
+
+  "file_path": mandatory: full path of file on local machine,
+  
+  "metadata_fields": TBD - metadata fields,
+
+}
+```
+
+From here you will include this information for each file you want uploaded.  Each file will be one row in the CSV.  You will then run this script via the command line.
