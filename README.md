@@ -85,7 +85,7 @@ You should create a zip file with two files inside of it.  The first file is the
   
   “description”: optional: short description of resource,
 
-  “metadata:” {  list all metadata attributes that will be set for the resource
+  “metadata:” {  list all metadata attributes that will be set for the package
 
      “organization”: ...
 
