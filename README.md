@@ -81,8 +81,6 @@ You should create a zip file with two files inside of it.  The first file is the
 
   "file_name": mandatory: full name of data file including file extension,
 
-  "organization": mandatory: CKAN organization,
-
   "ckan_api_key": mandatory: ckan API key,
 
   “metadata:” {  list all metadata attributes that will be set for the resource
