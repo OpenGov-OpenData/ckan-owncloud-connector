@@ -82,16 +82,18 @@ You should create a zip file with two files inside of it.  The first file is the
   "file_name": mandatory: full name of data file including file extension,
 
   "ckan_api_key": mandatory: ckan API key,
+  
+  “description”: optional: short description of resource,
 
   “metadata:” {  list all metadata attributes that will be set for the resource
 
-    “description”: ... 
+     “organization”: ...
 
     }
 
 }
 ```
-The package ID is for updating a pre-existing resource.  You should specify the package ID of the package this resource is in.  Resource name is the name the file will have on CKAN.  CKAN URL is the base URL of the CKAN instance to upload the file to.  File name is the name of the file in the zip file.  Method is the method to update the resource (either insert or upsert.  If creating a new resource, leave blank).  Organization is the organization to upload this dataset to.  API key is the API key of your user on CKAN.  Notification emails is a list of emails that will be emailed with the results of the script.  Metadata is the information when creating a new package that will be uploaded to CKAN.
+The package ID is for updating a pre-existing resource or creating a new package.  Resource name is the name the file will have on CKAN.  CKAN URL is the base URL of the CKAN instance to upload the file to.  File name is the name of the file in the zip file to be uploaded to CKAN.  API key is the API key of your user on CKAN.  Notification emails is a list of emails that will be emailed with the results of the script.  Metadata is the information when creating a new package that will be uploaded to CKAN.
 
 When you have correctly filled out your job.json file, create a zip file with the file to be uploaded and the job.json file in it.  Then upload this zip file to the correct orginization directory.
 
