@@ -75,19 +75,15 @@ You should create a zip file with two files inside of it.  The first file is the
 
   "package_id": mandatory: name of package uploading to or creating,
 
-  "resource_name": mandatory:resource name,
+  "resource_name": mandatory: resource name,
 
   "ckan_url": mandatory: fully qualified url of CKAN site,
 
-  "file_name": mandatory: file name of data file,
-
-  "method": mandatory: insert, upsert,
+  "file_name": mandatory: full name of data file including file extension,
 
   "organization": mandatory: CKAN organization,
 
   "ckan_api_key": mandatory: ckan API key,
-
-  "notification_emails": optional - comma-delimited list of emails,
 
   “metadata:” {  list all metadata attributes that will be set for the resource
 
