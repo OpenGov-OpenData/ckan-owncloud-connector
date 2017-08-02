@@ -76,6 +76,8 @@ You should create a zip file with two files inside of it.  The first file is the
   "package_id": mandatory: name of package uploading to or creating,
 
   "resource_name": mandatory: resource name,
+  
+  "resource_id": optional: resource ID to update resource,
 
   "ckan_url": mandatory: fully qualified url of CKAN site,
 
