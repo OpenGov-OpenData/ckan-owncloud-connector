@@ -1,8 +1,5 @@
-import sys
-import urllib
 import os
 import requests
-import json
 import datetime
 
 from requests_toolbelt import MultipartEncoder
