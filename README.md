@@ -30,7 +30,7 @@ ROOT
 
 ### Installing
 
-To install this script, clone this repo to your local machine
+To install this script, clone this repo to your local machine.  You will also need to pip install requests and requests_toolbelt
 
 ## Configuring the Script
 
