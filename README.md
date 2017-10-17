@@ -71,27 +71,19 @@ You should create a zip file with two files inside of it.  The first file is the
 ```
 {
 
-  "etl_version": optional: version_number,
+	"package_id": "",
 
-  "package_id": mandatory: name of package uploading to or creating,
+	"resource_name": "",
 
-  "resource_name": mandatory: resource name,
-  
-  "resource_id": optional: resource ID to update resource,
+	"ckan_url": "",
 
-  "ckan_url": mandatory: fully qualified url of CKAN site,
+	"file_name": "",
 
-  "file_name": mandatory: full name of data file including file extension,
+	"ckan_api_key": "",
 
-  "ckan_api_key": mandatory: ckan API key,
-  
-  “description”: optional: short description of resource,
-
-  “metadata:” {  list all metadata attributes that will be set for the package
-
-     “organization”: ...
-
-    }
+	"description": "",
+	
+	"file_type": ""
 
 }
 ```
