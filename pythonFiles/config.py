@@ -1,7 +1,3 @@
-import time
-
-test_id = int(time.time())
-
 Config = {
     # Change this to your ownCloud's URL
     'owncloud_url': '',
