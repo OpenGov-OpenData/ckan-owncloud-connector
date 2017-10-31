@@ -2,39 +2,43 @@ import json
 import os
 import shutil
 import sys
-import owncloud
 import urllib3
-import ckan_file_upload
 import zipfile
-import config
+from config import Config
 import time
+
+import src.owncloud as owncloud
+import src.ckan_action as ckan_action
 
 urllib3.disable_warnings()
 
+owncloudConfig = Config.get('owncloud')
 
 class TestFileAccess(object):
     def __init__(self):
         try:
-            self.client = owncloud.Client(config.Config['owncloud_url'], dav_endpoint_version=0)
-            self.client.login(config.Config['owncloud_login'], config.Config['owncloud_password'])
+            self.client = owncloud.Client(owncloudConfig.get('url'), dav_endpoint_version=0)
+            self.client.login(owncloudConfig.get('username'), owncloudConfig.get('password'))
+            self.root = owncloudConfig.get('root')
         except:
-            print('Problems with owncloud connection. Process aborting')
-            sys.exit(0)
+           print('Problems with owncloud connection. Process aborting')
+           sys.exit(0)
 
-    def test_upload_directory(self, ownclouddirectory, localdirectory):
-        self.client.put_directory(ownclouddirectory + '/', localdirectory + '/')
+    def test_upload_directory(self,
+     ownclouddirectory, localdirectory):
+        self.client.put_directory(self.root + '/' + ownclouddirectory + '/', localdirectory + '/')
 
     def test_download_dir(self, ownclouddirectory, localdirectory):
-        self.client.get_directory_as_zip(ownclouddirectory, localdirectory)
+        self.client.get_directory_as_zip(self.root + '/' + ownclouddirectory, localdirectory)
 
     def delete_file(self, ownclouddirectory, filename):
-        self.client.delete(ownclouddirectory + '/' + filename)
+        self.client.delete(self.root + '/' + ownclouddirectory + '/' + filename)
 
     def get_file_listing(self, ownclouddirectory):
-        self.client.list(ownclouddirectory)
+        self.client.list(self.root + '/' + ownclouddirectory)
 
     def test_get_file_listing(self, ownclouddirectory):
-        return self.client.list(ownclouddirectory)
+        return self.client.list(self.root + '/' + ownclouddirectory)
 
 
 def zip_file_extractor(zip_file_path, destination_file_path):
@@ -73,7 +77,7 @@ def file_upload_success(zip_file, local_upload_directory, organization_name):
 if __name__ == '__main__':
     ownCloudMethods = TestFileAccess()
     current_timestamp = (time.strftime('%Y%m%d%H%M%S'))
-    localDownloadDirectory = config.Config['localDownloadDirectory'] + '/owncloud ' + current_timestamp
+    localDownloadDirectory = owncloudConfig.get('download') + '/owncloud ' + current_timestamp
 
     OrganizationDirectories = ownCloudMethods.test_get_file_listing('')
 
@@ -149,16 +153,14 @@ if __name__ == '__main__':
 
                 if resource_id:
                     try:
-                        print(ckan_file_upload.upload_resource_patch(base_url, api_key, resource_dict,
-                                                               fullFilePath, resource_name))
+                        print(ckan_action.action('resource_patch', resource_dict, { 'name': resource_name, 'path': fullFilePath }))
+
                     except:
                         file_upload_fail(zipFile, localUploadDirectory, organization.name, 'CKAN file patch failed')
 
                 elif package_id:
                     try:
-                        print(ckan_file_upload.upload_resource_create(base_url, api_key, resource_dict,
-                                                                fullFilePath,
-                                                                file_name))
+                        print(ckan_action.action('resource_create', resource_dict, { 'name': file_name, 'path': fullFilePath }))
                     except:
                         file_upload_fail(zipFile, localUploadDirectory, organization.name,
                                          'CKAN file upload failed')
@@ -169,10 +171,9 @@ if __name__ == '__main__':
                         'owner_org': data.get('owner_org')
                     }
                     try:
-                        print(ckan_file_upload.upload_package(base_url, api_key, dataset_dict))
+                        print(ckan_action.action('package_create', dataset_dict))
                         resource_dict['package_id'] = dataset_dict['name']
-                        print(ckan_file_upload.upload_resource_create(base_url, api_key, resource_dict,
-                                                                fullFilePath, file_name))
+                        print(ckan_action.action('resousece_create', resource_dict, { 'name': file_name, 'path': fullFilePath }))
                     except:
                         file_upload_fail(zipFile, localUploadDirectory, organization.name,
                                          'CKAN file upload failed')
