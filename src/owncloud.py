@@ -19,6 +19,8 @@ import six
 from six.moves.urllib import parse
 
 
+# https://github.com/owncloud/pyocclient this script can be found at this link
+
 class ResponseError(Exception):
     def __init__(self, res, errorType):
         if type(res) is int:
