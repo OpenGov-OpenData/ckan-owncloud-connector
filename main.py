@@ -50,9 +50,9 @@ if __name__ == '__main__':
             localUploadDirectory = localDownloadDirectory + '/result ' + os.path.splitext(zipFile.name)[0]
             os.mkdir(localUploadDirectory)
             utils.zip_file_extractor(localDownloadDirectory + '/' + rootDir.name + '/' + zipFile.name, localUploadDirectory)
-            zipFileListingWhatIsThis = os.listdir(localUploadDirectory)
+            zipFileContents = os.listdir(localUploadDirectory)
 
-            if len(zipFileListingWhatIsThis) != 2:
+            if len(zipFileContents) != 2:
                 utils.file_upload_fail(zipFile, localUploadDirectory, rootDir.name, 'Incorrect number of files')
                 continue
             if not (os.path.isfile(localUploadDirectory + '/job.json')):
@@ -80,8 +80,8 @@ if __name__ == '__main__':
                     'name': data.get('resource_name'),
                     'url': '',
                     'description': data.get('resource_description'),
-                    'id':data.get('resource_id'),
-                    'format':data.get('file_type')
+                    'id': data.get('resource_id'),
+                    'format': data.get('file_type')
                 }
                 # Update resource if resource_id provided
                 if data.get('resource_id'):
