@@ -10,7 +10,7 @@ ckanConfig = Config.get('ckan')
 def action(action, resource_dict, upload=None):
     upload_obj = {}
     if upload:
-        upload_obj = (resource_dict.get('name'), open(os.path.abspath(upload.get('path')), 'rb'), 'application/octet-stream')
+        upload_obj = (upload.get('name'), open(os.path.abspath(upload.get('path')), 'rb'), 'application/octet-stream')
 
     m = MultipartEncoder(fields=dict(resource_dict.items() + ({'upload': upload_obj}).items()))
     r = requests.post(
