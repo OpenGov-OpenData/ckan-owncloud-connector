@@ -6,3 +6,5 @@
 \.idea/
 
 config\.py
+
+temp_*

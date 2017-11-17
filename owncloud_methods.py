@@ -1,4 +1,4 @@
-import sys
+import sys, os
 
 from config import Config
 
@@ -18,13 +18,14 @@ class OwnCloudWrapper(object):
             sys.exit(0)
 
     def upload_directory(self, ownclouddirectory, localdirectory):
-        self.client.put_directory(self.root + '/' + ownclouddirectory + '/', localdirectory + '/')
+        self.client.put_directory(os.path.join(self.root, ownclouddirectory), localdirectory)
+
 
     def download_dir(self, ownclouddirectory, localdirectory):
-        self.client.get_directory_as_zip(self.root + '/' + ownclouddirectory, localdirectory)
+        self.client.get_directory_as_zip(os.path.join(self.root, ownclouddirectory), localdirectory)
 
     def delete_file(self, ownclouddirectory, filename):
-        self.client.delete(self.root + '/' + ownclouddirectory + '/' + filename)
+        self.client.delete(os.path.join(self.root, ownclouddirectory, filename))
 
     def get_file_listing(self, ownclouddirectory):
-        return self.client.list(self.root + '/' + ownclouddirectory)
+        return self.client.list(os.path.join(self.root, ownclouddirectory))

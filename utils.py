@@ -23,7 +23,8 @@ def file_upload_fail(zip_file, local_upload_directory, organization_name, error_
         shutil.make_archive(local_upload_directory, 'zip', local_upload_directory)
         owncloud.upload_directory(organization_name + '/Failure', local_upload_directory)
         shutil.rmtree(local_upload_directory)
-    except:
+    except Exception as e:
+        print e
         print('File re-upload failed.  Check ' + organization_name + ' Failure directory')
 
 
@@ -37,5 +38,6 @@ def file_upload_success(zip_file, local_upload_directory, organization_name):
         shutil.make_archive(local_upload_directory, 'zip', local_upload_directory)
         owncloud.upload_directory(organization_name + '/Success', local_upload_directory)
         shutil.rmtree(local_upload_directory)
-    except:
+    except Exception as e:
+        print e
         print('File re-upload failed.  Check ' + organization_name + ' Success directory')
