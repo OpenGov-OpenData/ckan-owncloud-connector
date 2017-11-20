@@ -21,7 +21,7 @@ if __name__ == '__main__':
     owncloud = OwnCloudWrapper()
     current_timestamp = time.strftime('%Y%m%d%H%M%S')
 
-    paths={
+    paths = {
         'temp': './temp_' + current_timestamp
     }
 
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     # this will loop through all directories in root directory for each organization
     #  and will look for zip files
     for rootDir in rootFileList:
-        directory = rootDir.name;
+        directory = rootDir.name
 
         # get list of files in directory
         zipFileListing = owncloud.get_file_listing(directory)
@@ -46,7 +46,7 @@ if __name__ == '__main__':
                 zipFileListing.remove(file)
 
         if len(zipFileListing) == 0:
-            print('No zip files in %s directory. Checking next directory.'%(directory))
+            print('No zip files in %s directory. Checking next directory.' % directory)
             continue
 
         owncloud.download_dir(directory, os.path.join(paths.get('temp'), directory + '.zip'))
@@ -73,7 +73,7 @@ if __name__ == '__main__':
             required_items = ['resource_name', 'package_id', 'file_type']
             for item in required_items:
                 if not item in data:
-                    message = 'No %s in job.json'%(item)
+                    message = 'No %s in job.json' % item
                     print '%s. Aborting' % message
                     utils.file_upload_fail(zipFile, localUploadDirectory, directory, message)
                     continue
@@ -92,10 +92,12 @@ if __name__ == '__main__':
                 if data.get('resource_id'):
                     response = ckan_action.action('resource_patch', resource_dict, {'name': data.get('resource_name'), 'path': fullFilePath})
                     print(response)
+                    utils.file_upload_success(zipFile, localUploadDirectory, directory)
                 # Create new resource if only package id provided
                 elif data.get('package_id'):
                     response = ckan_action.action('resource_create', resource_dict, {'name': data.get('file_name'), 'path': fullFilePath})
                     print(response)
+                    utils.file_upload_success(zipFile, localUploadDirectory, directory)
                 # Create new package and resource if neither of resource_id, package_id provided
                 else:
                     dataset_dict = {
