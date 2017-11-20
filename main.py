@@ -19,13 +19,16 @@ ckanConfig = Config.get('ckan')
 if __name__ == '__main__':
 
     owncloud = OwnCloudWrapper()
-    current_timestamp = (time.strftime('%Y%m%d%H%M%S'))
-    localDownloadDirectory = './temp ' + current_timestamp
+    current_timestamp = time.strftime('%Y%m%d%H%M%S')
+
+    paths={
+        'temp': './temp_' + current_timestamp
+    }
 
     rootFileList = owncloud.get_file_listing(owncloudConfig.get('root'))
 
     try:
-        os.mkdir(localDownloadDirectory)
+        os.mkdir(paths.get('temp'))
     except:
         print('Problem accessing local file directory.  Process aborting.')
         sys.exit(0)
@@ -33,44 +36,46 @@ if __name__ == '__main__':
     # this will loop through all directories in root directory for each organization
     #  and will look for zip files
     for rootDir in rootFileList:
+        directory = rootDir.name;
+
         # get list of files in directory
-        zipFileListing = owncloud.get_file_listing(rootDir.name)
+        zipFileListing = owncloud.get_file_listing(directory)
         # keep only zip files
         for file in zipFileListing[:]:
             if os.path.splitext(file.name)[1] != '.zip':
                 zipFileListing.remove(file)
+
         if len(zipFileListing) == 0:
-            print('No zip files in ' + rootDir.name + ' directory. Checking next directory.')
+            print('No zip files in %s directory. Checking next directory.'%(directory))
             continue
 
-        owncloud.download_dir(rootDir.name, localDownloadDirectory + '/' + rootDir.name + '.zip')
-        utils.zip_file_extractor(localDownloadDirectory + '/' + rootDir.name + '.zip', localDownloadDirectory)
+        owncloud.download_dir(directory, os.path.join(paths.get('temp'), directory + '.zip'))
+        utils.zip_file_extractor(os.path.join(paths.get('temp'), directory + '.zip'), paths.get('temp'))
 
         for zipFile in zipFileListing:
-            localUploadDirectory = localDownloadDirectory + '/result ' + os.path.splitext(zipFile.name)[0]
+            localUploadDirectory = os.path.join(paths.get('temp'), 'result_' + os.path.splitext(zipFile.name)[0])
             os.mkdir(localUploadDirectory)
-            utils.zip_file_extractor(localDownloadDirectory + '/' + rootDir.name + '/' + zipFile.name, localUploadDirectory)
+            utils.zip_file_extractor(os.path.join(paths.get('temp'), directory, zipFile.name), localUploadDirectory)
             zipFileContents = os.listdir(localUploadDirectory)
 
             if len(zipFileContents) != 2:
-                utils.file_upload_fail(zipFile, localUploadDirectory, rootDir.name, 'Incorrect number of files')
+                utils.file_upload_fail(zipFile, localUploadDirectory, directory, 'Incorrect number of files')
                 continue
-            if not (os.path.isfile(localUploadDirectory + '/job.json')):
-                utils.file_upload_fail(zipFile, localUploadDirectory, rootDir.name, 'No job.json file')
+            if not (os.path.isfile(os.path.join(localUploadDirectory, 'job.json'))):
+                utils.file_upload_fail(zipFile, localUploadDirectory, directory, 'No job.json file')
                 continue
 
-            open(localUploadDirectory + '/job.json').read()
-            with open(localUploadDirectory + '/job.json') as data_file:
+            with open(os.path.join(localUploadDirectory, 'job.json')) as data_file:
                 data = json.load(data_file)
 
-            fullFilePath = localUploadDirectory + '/' + data.get('file_name')
-
+            fullFilePath = os.path.join(localUploadDirectory, data.get('file_name'))
             # Verify all required CKAN fields are present
             required_items = ['resource_name', 'package_id', 'file_type']
             for item in required_items:
                 if not item in data:
-                    print('No %s. Aborting' % item)
-                    utils.file_upload_fail(zipFile, localUploadDirectory, rootDir.name, 'No' + item + ' in job.json')
+                    message = 'No %s in job.json'%(item)
+                    print '%s. Aborting' % message
+                    utils.file_upload_fail(zipFile, localUploadDirectory, directory, message)
                     continue
 
             # Call CKAN API
@@ -105,8 +110,8 @@ if __name__ == '__main__':
                     response = ckan_action.action('resource_create', resource_dict, {'name': data.get('file_name'), 'path': fullFilePath})
                     print(response)
             except:
-                utils.file_upload_fail(zipFile, localUploadDirectory, rootDir.name, 'CKAN file upload failed')
+                utils.file_upload_fail(zipFile, localUploadDirectory, directory, 'CKAN file upload failed')
 
             shutil.rmtree(localUploadDirectory, ignore_errors=True)
-        shutil.rmtree(localDownloadDirectory + '/' + rootDir.name, ignore_errors=True)
-    shutil.rmtree(localDownloadDirectory, ignore_errors=True)
+        shutil.rmtree(os.path.join(localUploadDirectory, directory), ignore_errors=True)
+    shutil.rmtree(paths.get('temp'), ignore_errors=True)

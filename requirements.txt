@@ -1,4 +1,6 @@
-requests
-requests_toolbelt
-urllib3
+
+requests==2.18.4
+requests-toolbelt==0.8.0
 requests[security]
+six==1.11.0
+urllib3
