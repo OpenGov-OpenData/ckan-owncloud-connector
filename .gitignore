@@ -1,0 +1,12 @@
+
+\.DS_Store
+
+*.pyc
+
+\.idea/
+
+config\.py
+
+temp_*
+
+temp/

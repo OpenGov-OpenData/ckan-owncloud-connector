@@ -18,6 +18,9 @@ import math
 import six
 from six.moves.urllib import parse
 
+requests.packages.urllib3.disable_warnings()
+
+# https://github.com/owncloud/pyocclient this script can be found at this link
 
 class ResponseError(Exception):
     def __init__(self, res, errorType):
@@ -405,7 +408,7 @@ class Client(object):
         headers = {}
         if isinstance(depth, int) or depth == "infinity":
             headers['Depth'] = str(depth)
-
+        print path
         res = self._make_dav_request('PROPFIND', path, headers=headers)
         # first one is always the root, remove it from listing
         if res:
