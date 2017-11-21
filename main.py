@@ -22,13 +22,13 @@ if __name__ == '__main__':
     current_timestamp = time.strftime('%Y%m%d%H%M%S')
 
     paths = {
-        'temp': './temp_' + current_timestamp
+        'temp': './temp/' + current_timestamp
     }
 
     rootFileList = owncloud.get_file_listing(owncloudConfig.get('root'))
 
     try:
-        os.mkdir(paths.get('temp'))
+        os.makedirs(paths.get('temp'))
     except:
         print('Problem accessing local file directory.  Process aborting.')
         sys.exit(0)
@@ -111,7 +111,8 @@ if __name__ == '__main__':
                     resource_dict['package_id'] = response.get('result').get('name')
                     response = ckan_action.action('resource_create', resource_dict, {'name': data.get('file_name'), 'path': fullFilePath})
                     print(response)
-            except:
+            except Exception as e:
+                print e
                 utils.file_upload_fail(zipFile, localUploadDirectory, directory, 'CKAN file upload failed')
 
             shutil.rmtree(localUploadDirectory, ignore_errors=True)

@@ -18,6 +18,7 @@ import math
 import six
 from six.moves.urllib import parse
 
+requests.packages.urllib3.disable_warnings()
 
 # https://github.com/owncloud/pyocclient this script can be found at this link
 
